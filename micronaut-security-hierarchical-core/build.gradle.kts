@@ -11,8 +11,8 @@ dependencies {
     annotationProcessor("io.micronaut:micronaut-inject-java")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
 
+    implementation("io.micronaut.security:micronaut-security")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
-
     testCompileOnly("org.projectlombok:lombok:$lombokVersion")
 
     testImplementation("io.micronaut.test:micronaut-test-junit5")
