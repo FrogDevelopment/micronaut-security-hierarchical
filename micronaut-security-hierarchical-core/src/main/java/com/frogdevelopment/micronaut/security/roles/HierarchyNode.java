@@ -9,26 +9,26 @@ import io.micronaut.serde.annotation.Serdeable;
 @Serdeable
 public record HierarchyNode(String key, List<HierarchyNode> children) {
 
-    public static Builder builder(final String key) {
+    static Builder builder(final String key) {
         return new Builder(key);
     }
 
-    public static class Builder {
+    static class Builder {
         private final String key;
         private List<Builder> childrenBuilder;
 
-        private Builder(String key) {
+        private Builder(final String key) {
             this.key = key;
         }
 
-        public void addChild(Builder child) {
+        void addChild(final Builder child) {
             if (this.childrenBuilder == null) {
                 this.childrenBuilder = new ArrayList<>();
             }
             this.childrenBuilder.add(child);
         }
 
-        public HierarchyNode build() {
+        HierarchyNode build() {
             if (CollectionUtils.isEmpty(childrenBuilder)) {
                 return new HierarchyNode(key, null);
             } else {

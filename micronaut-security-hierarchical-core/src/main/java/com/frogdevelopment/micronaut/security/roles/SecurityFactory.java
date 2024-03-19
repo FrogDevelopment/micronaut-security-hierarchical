@@ -13,6 +13,6 @@ public class SecurityFactory {
     @Context
     @Replaces(bean = DefaultRolesFinder.class)
     RolesFinder hierarchyRolesFinder(final TokenConfiguration tokenConfiguration, final HierarchyProperties hierarchyProperties) {
-        return new HierarchyRolesFinder(tokenConfiguration, hierarchyProperties.getRootNode());
+        return new HierarchyRolesFinder(tokenConfiguration, HierarchyUtils.getRootNode(hierarchyProperties));
     }
 }

@@ -34,7 +34,8 @@ class HierarchyRolesFinderTest {
         var tokenConfiguration = new TokenConfigurationProperties();
         var hierarchyProperties = new HierarchyProperties();
         hierarchyProperties.setRepresentation(HIERARCHY);
-        var rootNode = hierarchyProperties.getRootNode();
+        // fixme create data directly
+        var rootNode = HierarchyUtils.getRootNode(hierarchyProperties);
 
         var rolesFinder = new HierarchyRolesFinder(tokenConfiguration, rootNode);
         var roles = List.of("0-1", "1");

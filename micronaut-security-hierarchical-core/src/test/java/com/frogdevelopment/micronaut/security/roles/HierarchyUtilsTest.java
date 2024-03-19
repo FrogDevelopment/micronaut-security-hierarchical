@@ -5,15 +5,12 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
-class HierarchyPropertiesTest {
+class HierarchyUtilsTest {
 
     private static final String HIERARCHY = """
-            root > 0
-            root > 1
+            root>0
+            root   >  1
             0 > 0-0
             0-0 > 0-0-0
             0-0 > 0-0-1
@@ -36,11 +33,11 @@ class HierarchyPropertiesTest {
         hierarchyProperties.setRepresentation(hierarchyRoles);
 
         // when
-        var caught = catchThrowable(hierarchyProperties::getRootNode);
+        var caught = catchThrowable(() -> HierarchyUtils.getRootNode(hierarchyProperties));
 
         // then
         assertThat(caught)
-                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("Missing root for hierarchy roles");
     }
 
@@ -51,7 +48,7 @@ class HierarchyPropertiesTest {
         hierarchyProperties.setRepresentation(HIERARCHY);
 
         // when
-        var root = hierarchyProperties.getRootNode();
+        var root = HierarchyUtils.getRootNode(hierarchyProperties);
 
         // then
         var parents = root.children();
