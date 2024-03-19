@@ -3,7 +3,6 @@ package com.frogdevelopment.micronaut.security.roles;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,14 +33,14 @@ class HierarchyRolesFinderTest {
         // given
         var tokenConfiguration = new TokenConfigurationProperties();
         var hierarchyProperties = new HierarchyProperties();
-        hierarchyProperties.setHierarchy(HIERARCHY);
+        hierarchyProperties.setRepresentation(HIERARCHY);
         var rootNode = hierarchyProperties.getRootNode();
 
         var rolesFinder = new HierarchyRolesFinder(tokenConfiguration, rootNode);
-        var attributes = Map.<String, Object>of("roles", List.of("0-1", "1"));
+        var roles = List.of("0-1", "1");
 
         // when
-        var allRoles = rolesFinder.resolveRoles(attributes);
+        var allRoles = rolesFinder.getEffectiveRoles(roles);
 
         // then
         assertThat(allRoles).containsExactlyInAnyOrder("0-1", "0-1-0", "0-1-1", "1", "1-0", "1-0-0");

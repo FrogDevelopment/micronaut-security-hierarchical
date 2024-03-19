@@ -7,9 +7,7 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
-public record HierarchyNode(String key,
-                            Boolean isLeaf,
-                            List<HierarchyNode> children) {
+public record HierarchyNode(String key, List<HierarchyNode> children) {
 
     public static Builder builder(final String key) {
         return new Builder(key);
@@ -32,12 +30,12 @@ public record HierarchyNode(String key,
 
         public HierarchyNode build() {
             if (CollectionUtils.isEmpty(childrenBuilder)) {
-                return new HierarchyNode(key, true, null);
+                return new HierarchyNode(key, null);
             } else {
                 var children = childrenBuilder.stream()
                         .map(Builder::build)
                         .toList();
-                return new HierarchyNode(key, false, children);
+                return new HierarchyNode(key, children);
             }
         }
     }
