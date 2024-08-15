@@ -1,28 +1,25 @@
 plugins {
-    id("io.micronaut.minimal.library") version "4.3.4"
+    id("io.micronaut.minimal.library") version "4.4.2"
 }
 
 dependencies {
-    val lombokVersion = "1.18.24"
+    compileOnly(mn.lombok)
+    annotationProcessor(mn.lombok)
+    annotationProcessor(mn.micronaut.inject.java)
+    annotationProcessor(mn.micronaut.serde.processor)
 
-    compileOnly("org.projectlombok:lombok:$lombokVersion")
-    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
-    // Micronaut processor defined after Lombok
-    annotationProcessor("io.micronaut:micronaut-inject-java")
-    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation(mn.micronaut.security)
+    implementation(mn.micronaut.security.jwt)
+    implementation(mn.micronaut.serde.jackson)
 
-    implementation("io.micronaut.security:micronaut-security")
-    implementation("io.micronaut.security:micronaut-security-jwt")
-    implementation("io.micronaut.serde:micronaut-serde-jackson")
-    testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+    testImplementation(mn.assertj.core)
+    testImplementation(mn.mockito.junit.jupiter)
 
-    testImplementation("io.micronaut.test:micronaut-test-junit5")
-    testImplementation("org.assertj:assertj-core")
-    testImplementation("org.mockito:mockito-junit-jupiter")
+    testRuntimeOnly(mn.logback.classic)
+    testRuntimeOnly(mn.snakeyaml)
 
-    testRuntimeOnly("ch.qos.logback:logback-classic")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testRuntimeOnly("org.yaml:snakeyaml")
+    testAnnotationProcessor(mn.lombok)
+    testCompileOnly(mn.lombok)
 }
 
 micronaut {
